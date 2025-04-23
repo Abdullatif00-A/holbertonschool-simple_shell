@@ -27,7 +27,7 @@ int main(void)
 		args = parse_line(line);
 		if (args[0] != NULL)
 		{
-			if (strcmp(args[0], "exit") == 0)
+			if (_strcmp(args[0], "exit") == 0)
 			{
 				free(args);
 				free(line);
