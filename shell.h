@@ -12,5 +12,5 @@ char **parse_line(char *line);
 int execute_cmd(char **args);
 extern char **environ;
 char *find_command(char *command);
-
+ssize_t _getline(char **lineptr, size_t *n, int fd);
 #endif

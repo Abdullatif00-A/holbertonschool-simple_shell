@@ -17,7 +17,7 @@ int main(void)
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
 
-		read = getline(&line, &len, stdin);
+		read = _getline(&line, &len, STDIN_FILENO);
 		if (read == -1)
 		{
 			free(line);
@@ -38,7 +38,6 @@ int main(void)
 
 		free(args);
 	}
-	printf("OK\n");
 	free(line);
 	exit(status);
 }
