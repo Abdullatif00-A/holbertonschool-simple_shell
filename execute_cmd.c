@@ -87,6 +87,7 @@ int execute_cmd(char **args, char *line)
  * @line: The input line to free before exiting
  * Return: 2 if error, does not return if successful
  */
+
 int handle_exit(char **args, char *line)
 {
 	int status = 0;
@@ -96,7 +97,9 @@ int handle_exit(char **args, char *line)
 		if (!is_number(args[1]))
 		{
 			fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", args[1]);
-			return (2);
+			free(args);
+			free(line);
+			exit(2);
 		}
 		status = _atoi(args[1]) % 256;
 	}
@@ -104,4 +107,5 @@ int handle_exit(char **args, char *line)
 	free(line);
 	exit(status);
 }
+
 
