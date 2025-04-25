@@ -97,6 +97,7 @@ int handle_exit(char **args)
 			return (2);
 		}
 		status = _atoi(args[1]);
+		status = status % 256;  /* Ensure status is within 0-255 */
 	}
 	free(args);
 	exit(status);
