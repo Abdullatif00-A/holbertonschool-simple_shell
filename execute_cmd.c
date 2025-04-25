@@ -20,6 +20,10 @@ int execute_cmd(char **args, char *line, int last_status)
 	if (_strcmp(args[0], "exit") == 0)
 		return (handle_exit(args, line, last_status));
 
+	/* Built-in: cd */
+	if (_strcmp(args[0], "cd") == 0)
+		return (handle_cd(args));
+
 	/* Built-in: env */
 	if (_strcmp(args[0], "env") == 0)
 	{
