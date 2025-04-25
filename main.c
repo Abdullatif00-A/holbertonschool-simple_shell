@@ -21,13 +21,13 @@ int main(void)
 		if (read == -1)
 		{
 			free(line);
-			exit(0);
+			exit(status);
 		}
 
 		args = parse_line(line);
 		if (args[0] != NULL)
 		{
-			status = execute_cmd(args, line);
+			status = execute_cmd(args, line, status);
 		}
 
 		free(args);

@@ -13,8 +13,8 @@
 #include <dirent.h>
 
 /* Function Prototypes */
-int execute_cmd(char **args, char *line);
-int handle_exit(char **args, char *line);
+int execute_cmd(char **args, char *line, int last_status);
+int handle_exit(char **args, char *line, int last_status);
 char **parse_line(char *line);
 char *find_command(char *command);
 ssize_t _getline(char **lineptr, size_t *n, int fd);

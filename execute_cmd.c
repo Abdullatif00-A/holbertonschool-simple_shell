@@ -4,20 +4,21 @@
  * execute_cmd - Executes a command with path resolution
  * @args: Argument vector (command and its arguments)
  * @line: The input line to free on exit
- * Return: 127 if command not found, 0 otherwise
+ * @last_status: The status of the last executed command
+ * Return: Exit status of the command
  */
-int execute_cmd(char **args, char *line)
+int execute_cmd(char **args, char *line, int last_status)
 {
 	pid_t pid;
 	int status;
 	char *cmd_path;
 
 	if (args[0] == NULL)
-		return (0);
+		return (last_status);
 
 	/* Built-in: exit */
 	if (_strcmp(args[0], "exit") == 0)
-		return (handle_exit(args, line));
+		return (handle_exit(args, line, last_status));
 
 	/* Built-in: env */
 	if (_strcmp(args[0], "env") == 0)
@@ -55,7 +56,7 @@ int execute_cmd(char **args, char *line)
 	{
 		if (execve(cmd_path, args, environ) == -1)
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+			perror("./hsh");
 			free(cmd_path);
 			exit(127);
 		}
@@ -85,12 +86,12 @@ int execute_cmd(char **args, char *line)
  * handle_exit - Handles the exit built-in with optional status
  * @args: Argument vector
  * @line: The input line to free before exiting
- * Return: 2 if error, does not return if successful
+ * @last_status: Status of last executed command
+ * Return: Does not return if successful, exits with status
  */
-
-int handle_exit(char **args, char *line)
+int handle_exit(char **args, char *line, int last_status)
 {
-	int status = 0;
+	int status;
 
 	if (args[1] != NULL)
 	{
@@ -103,9 +104,13 @@ int handle_exit(char **args, char *line)
 		}
 		status = _atoi(args[1]) % 256;
 	}
+	else
+	{
+		status = last_status % 256;
+	}
+
 	free(args);
 	free(line);
 	exit(status);
 }
-
 
