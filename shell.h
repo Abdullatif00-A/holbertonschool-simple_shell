@@ -28,6 +28,6 @@ int is_number(const char *s);
 int _atoi(const char *s);
 
 extern char **environ;
-
+int handle_cd(char **args);
 #endif /* SHELL_H */
 

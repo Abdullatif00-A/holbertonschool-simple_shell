@@ -114,3 +114,45 @@ int handle_exit(char **args, char *line, int last_status)
 	exit(status);
 }
 
+/**
+ * handle_cd - Handles the cd built-in command
+ * @args: Argument vector
+ * Return: 0 on success, 2 on failure
+ */
+int handle_cd(char **args)
+{
+	char cwd[1024];
+	char *dir, *oldpwd;
+
+	if (args[1] == NULL)
+		dir = getenv("HOME");
+	else if (_strcmp(args[1], "-") == 0)
+	{
+		dir = getenv("OLDPWD");
+		if (!dir)
+		{
+			fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
+			return (2);
+		}
+		printf("%s\n", dir);
+	}
+	else
+		dir = args[1];
+
+	if (chdir(dir) != 0)
+	{
+		fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", dir);
+		return (2);
+	}
+
+	/* Update PWD and OLDPWD */
+	oldpwd = getenv("PWD");
+	if (oldpwd)
+		setenv("OLDPWD", oldpwd, 1);
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		setenv("PWD", cwd, 1);
+
+	return (0);
+}
+
