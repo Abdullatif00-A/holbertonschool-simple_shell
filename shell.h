@@ -3,23 +3,31 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <dirent.h>
 
-int has_path_env(void);
+/* Function Prototypes */
+int execute_cmd(char **args, char *line);
+int handle_exit(char **args, char *line);
 char **parse_line(char *line);
-int execute_cmd(char **args);
-extern char **environ;
 char *find_command(char *command);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
+
 int _strcmp(const char *s1, const char *s2);
 char *_strdup(const char *s);
 char *_strchr(const char *s, int c);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strtok(char *str, const char *delim);
-int handle_exit(char **args);
 int is_number(const char *s);
 int _atoi(const char *s);
 
-#endif
+extern char **environ;
+
+#endif /* SHELL_H */
+

@@ -3,9 +3,10 @@
 /**
  * execute_cmd - Executes a command with path resolution
  * @args: Argument vector (command and its arguments)
+ * @line: The input line to free on exit
  * Return: 127 if command not found, 0 otherwise
  */
-int execute_cmd(char **args)
+int execute_cmd(char **args, char *line)
 {
 	pid_t pid;
 	int status;
@@ -16,7 +17,7 @@ int execute_cmd(char **args)
 
 	/* Built-in: exit */
 	if (_strcmp(args[0], "exit") == 0)
-		return (handle_exit(args));
+		return (handle_exit(args, line));
 
 	/* Built-in: env */
 	if (_strcmp(args[0], "env") == 0)
@@ -83,9 +84,10 @@ int execute_cmd(char **args)
 /**
  * handle_exit - Handles the exit built-in with optional status
  * @args: Argument vector
+ * @line: The input line to free before exiting
  * Return: 2 if error, does not return if successful
  */
-int handle_exit(char **args)
+int handle_exit(char **args, char *line)
 {
 	int status = 0;
 
@@ -96,10 +98,10 @@ int handle_exit(char **args)
 			fprintf(stderr, "exit: Illegal number: %s\n", args[1]);
 			return (2);
 		}
-		status = _atoi(args[1]);
-		status = status % 256;  /* Ensure status is within 0-255 */
+		status = _atoi(args[1]) % 256;
 	}
 	free(args);
+	free(line);
 	exit(status);
 }
 

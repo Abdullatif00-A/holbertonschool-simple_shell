@@ -27,7 +27,7 @@ int main(void)
 		args = parse_line(line);
 		if (args[0] != NULL)
 		{
-			status = execute_cmd(args);
+			status = execute_cmd(args, line);
 		}
 
 		free(args);
