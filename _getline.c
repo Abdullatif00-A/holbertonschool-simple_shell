@@ -13,7 +13,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
 	static char buffer[READ_BUF_SIZE];
 	static size_t buf_pos, buf_size;
-	ssize_t total_read = 0;
+	size_t total_read = 0;
 	char *new_lineptr;
 	char c;
 	size_t old_size;
@@ -35,7 +35,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 		{
 			buf_size = read(fd, buffer, READ_BUF_SIZE);
 			if (buf_size <= 0)
-				return (total_read > 0 ? total_read : -1);
+				return (total_read > 0 ? (ssize_t)total_read : (ssize_t)-1);
 			buf_pos = 0;
 		}
 
@@ -57,6 +57,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	}
 
 	(*lineptr)[total_read] = '\0';
-	return (total_read);
+	return ((ssize_t)total_read);
 }
+
 
