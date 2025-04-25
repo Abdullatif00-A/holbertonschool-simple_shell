@@ -154,3 +154,41 @@ char *_strtok(char *str, const char *delim)
 	return (token_start);
 }
 
+/**
+ * is_number - Checks if a string is a valid number
+ * @s: The string to check
+ * Return: 1 if number, 0 otherwise
+ */
+int is_number(const char *s)
+{
+	int i = 0;
+
+	if (!s || s[0] == '\0')
+		return (0);
+
+	while (s[i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+/**
+ * _atoi - Converts a string to an integer
+ * @s: The string to convert
+ * Return: The integer value
+ */
+int _atoi(const char *s)
+{
+	int num = 0, i = 0;
+
+	while (s[i])
+	{
+		num = num * 10 + (s[i] - '0');
+		i++;
+	}
+	return (num);
+}
+

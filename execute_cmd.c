@@ -16,7 +16,7 @@ int execute_cmd(char **args)
 
 	/* Built-in: exit */
 	if (_strcmp(args[0], "exit") == 0)
-		exit(0);
+		return (handle_exit(args));
 
 	/* Built-in: env */
 	if (_strcmp(args[0], "env") == 0)
@@ -40,7 +40,6 @@ int execute_cmd(char **args)
 	}
 	else
 	{
-		/* No '/', resolve using PATH */
 		cmd_path = find_command(args[0]);
 		if (cmd_path == NULL)
 		{
@@ -49,7 +48,6 @@ int execute_cmd(char **args)
 		}
 	}
 
-	/* Fork and exec */
 	pid = fork();
 
 	if (pid == 0)
@@ -80,5 +78,27 @@ int execute_cmd(char **args)
 		return (2);
 	}
 	return (0);
+}
+
+/**
+ * handle_exit - Handles the exit built-in with optional status
+ * @args: Argument vector
+ * Return: 2 if error, does not return if successful
+ */
+int handle_exit(char **args)
+{
+	int status = 0;
+
+	if (args[1] != NULL)
+	{
+		if (!is_number(args[1]))
+		{
+			fprintf(stderr, "exit: Illegal number: %s\n", args[1]);
+			return (2);
+		}
+		status = _atoi(args[1]);
+	}
+	free(args);
+	exit(status);
 }
 

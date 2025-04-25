@@ -18,4 +18,8 @@ char *_strdup(const char *s);
 char *_strchr(const char *s, int c);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strtok(char *str, const char *delim);
+int handle_exit(char **args);
+int is_number(const char *s);
+int _atoi(const char *s);
+
 #endif
