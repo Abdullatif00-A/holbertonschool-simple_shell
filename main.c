@@ -27,12 +27,6 @@ int main(void)
 		args = parse_line(line);
 		if (args[0] != NULL)
 		{
-			if (_strcmp(args[0], "exit") == 0)
-			{
-				free(args);
-				free(line);
-				exit(0);
-			}
 			status = execute_cmd(args);
 		}
 
