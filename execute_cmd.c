@@ -95,7 +95,7 @@ int handle_exit(char **args, char *line)
 	{
 		if (!is_number(args[1]))
 		{
-			fprintf(stderr, "exit: Illegal number: %s\n", args[1]);
+			fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", args[1]);
 			return (2);
 		}
 		status = _atoi(args[1]) % 256;
