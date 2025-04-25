@@ -77,19 +77,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	if (ptr == NULL)
 	{
 		new_ptr = malloc(new_size);
-		if (new_ptr == NULL)
+		if (!new_ptr)
 			return (NULL);
 		return (new_ptr);
 	}
 
-	if (new_size == 0 && ptr != NULL)
+	if (new_size == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
 
 	new_ptr = malloc(new_size);
-	if (new_ptr == NULL)
+	if (!new_ptr)
 		return (NULL);
 
 	for (i = 0; i < old_size && i < new_size; i++)
@@ -97,5 +97,60 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 	free(ptr);
 	return (new_ptr);
+}
+
+/**
+ * _strtok - Custom strtok implementation
+ * @str: The string to tokenize (NULL to continue tokenizing)
+ * @delim: Delimiters
+ *
+ * Return: Pointer to next token, or NULL if no more tokens
+ */
+char *_strtok(char *str, const char *delim)
+{
+	static char *next;
+	char *token_start;
+	int i;
+
+	if (str != NULL)
+		next = str;
+
+	if (next == NULL || *next == '\0')
+		return (NULL);
+
+	/* Skip leading delimiters */
+	while (*next)
+	{
+		for (i = 0; delim[i]; i++)
+		{
+			if (*next == delim[i])
+			{
+				next++;
+				i = -1;
+			}
+		}
+		break;
+	}
+
+	if (*next == '\0')
+		return (NULL);
+
+	token_start = next;
+
+	while (*next)
+	{
+		for (i = 0; delim[i]; i++)
+		{
+			if (*next == delim[i])
+			{
+				*next = '\0';
+				next++;
+				return (token_start);
+			}
+		}
+		next++;
+	}
+
+	return (token_start);
 }
 

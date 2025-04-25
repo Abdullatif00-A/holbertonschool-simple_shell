@@ -17,4 +17,5 @@ int _strcmp(const char *s1, const char *s2);
 char *_strdup(const char *s);
 char *_strchr(const char *s, int c);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_strtok(char *str, const char *delim);
 #endif

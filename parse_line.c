@@ -8,33 +8,36 @@
  */
 char **parse_line(char *line)
 {
-int bufsize = 64, i = 0;
-char **tokens = malloc(bufsize * sizeof(char *));
-char *token;
+	int bufsize = 64, i = 0;
+	char **tokens = malloc(bufsize * sizeof(char *));
+	char *token;
 
-if (!tokens)
-{
-perror("malloc");
-exit(EXIT_FAILURE);
+	if (!tokens)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
+	token = _strtok(line, " \n\t");
+	while (token)
+	{
+		tokens[i++] = token;
+
+		if (i >= bufsize)
+		{
+			int old_size = bufsize;
+
+			bufsize += 64;
+			tokens = _realloc(tokens, old_size * sizeof(char *), bufsize * sizeof(char *));
+			if (!tokens)
+			{
+				perror("realloc");
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = _strtok(NULL, " \n\t");
+	}
+	tokens[i] = NULL;
+	return (tokens);
 }
 
-token = strtok(line, " \n\t");
-while (token)
-{
-tokens[i++] = token;
-if (i >= bufsize)
-{
-bufsize += 64;
-tokens = realloc(tokens, bufsize *sizeof(char *));
-if (!tokens)
-{
-perror("realloc");
-exit(EXIT_FAILURE);
-}
-}
-token = strtok(NULL, " \n\t");
-}
-tokens[i] = NULL;
-return (tokens);
-free(tokens);
-}
